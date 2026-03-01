@@ -1,73 +1,50 @@
-# Welcome to your Lovable project
+# 🌌 LearnFlow - AI-Powered Adaptive Learning Platform
 
-## Project info
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+[![React](https://img.shields.io/badge/React-18.2.0-61dafb?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0-646cff?logo=vite)](https://vitejs.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Cloud-3ECF8E?logo=supabase)](https://supabase.com/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3.3-38b2ac?logo=tailwindcss)](https://tailwindcss.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-10.0-0055FF?logo=framer)](https://www.framer.com/motion/)
 
-## How can I edit this code?
+## 📖 Overview
 
-There are several ways of editing your application.
+**LearnFlow** is an immersive, cinematic web application designed to personalize education using Artificial Intelligence. It adapts to the user's experience level, provides real-time AI tutoring, generates quizzes, and tracks progress through a beautiful, motion-rich interface.
 
-**Use Lovable**
+## ✨ Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 🧠 AI Learning Core
+- **Adaptive AI Chat:** Context-aware responses based on user expertise (Beginner/Intermediate/Advanced).
+- **Smart Quiz Generation:** Auto-generated quizzes to test comprehension after lessons.
+- **Domain Selection:** Choose from topics like Technology, Science, Financial Literacy, Mental Wellness, and more.
+- **Progress Tracking:** Detailed analytics on interactions, quiz accuracy, and learning streaks.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 🎨 Cinematic UI/UX (Latest Update)
+- **Glassmorphism Design:** Modern translucent cards and blur effects.
+- **Framer Motion Animations:** Smooth page transitions, staggered loading, and interactive hover states.
+- **Dynamic Backgrounds:** Moving gradient orbs and noise textures for an immersive feel.
+- **Responsive Layout:** Fully optimized for mobile, tablet, and desktop.
 
-**Use your preferred IDE**
+### 🔐 Security & Backend
+- **Authentication:** Secure login/signup via Supabase Auth.
+- **Database:** PostgreSQL managed by Supabase for user data and interactions.
+- **Edge Functions:** Serverless AI processing for low-latency responses.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 🚀 Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+| Category | Technology |
+|----------|------------|
+| **Frontend** | React 18, TypeScript, Vite |
+| **Styling** | Tailwind CSS, shadcn-ui, Custom CSS |
+| **Animation** | Framer Motion |
+| **Backend** | Supabase (Auth, DB, Edge Functions) |
+| **State** | TanStack Query, React Context |
+| **Icons** | Lucide React |
 
-Follow these steps:
+## 🛠️ Installation & Setup
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Manu71862/pdf-requirements-granted.git
+cd pdf-requirements-granted
