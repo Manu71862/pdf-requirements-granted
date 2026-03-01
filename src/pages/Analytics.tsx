@@ -4,6 +4,7 @@ import { getDomainLabel } from "@/lib/domains";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { BarChart3, Target, TrendingUp, BookOpen, Star, Brain } from "lucide-react";
+import { fadeUp, staggerContainer, staggerItem, transitions } from "@/lib/animations";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, CartesianGrid,

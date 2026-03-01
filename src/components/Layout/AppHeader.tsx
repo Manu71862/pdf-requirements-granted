@@ -1,8 +1,9 @@
 import { useAuth } from "@/lib/auth";
 import { useProfile } from "@/hooks/useProfile";
 import { Button } from "@/components/ui/button";
-import { BookOpen, LogOut, User, BarChart3 } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "@/components/Logo";
 
 export function AppHeader() {
   const { signOut } = useAuth();
@@ -17,11 +18,8 @@ export function AppHeader() {
   return (
     <header className="sticky top-0 z-50 glass border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between h-14 px-4">
-        <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-            <BookOpen className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span className="font-display font-bold text-foreground">Learnflow</span>
+        <Link to="/dashboard">
+          <Logo size="sm" />
         </Link>
 
         <nav className="flex items-center gap-4">

@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, Sparkles, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { fadeUp, messageIn, collapse, fadeIn } from "@/lib/animations";
 
 interface Message {
   role: "user" | "assistant";
@@ -20,6 +21,18 @@ interface Message {
   interactionId?: string;
   quiz?: { question: string; options: string[]; correctAnswer: string } | null;
 }
+
+const suggestedByDomain: Record<string, string[]> = {
+  career_guidance: ["How do I write a standout resume?", "What are the top careers in 2026?", "Help me prepare for a job interview"],
+  civic_awareness: ["What are my fundamental rights?", "How does the election process work?", "Explain the structure of local government"],
+  mental_wellness: ["How can I manage stress better?", "Teach me a mindfulness technique", "What are signs of burnout?"],
+  technology: ["Explain how machine learning works", "What is cloud computing?", "How does blockchain work?"],
+  science: ["What is photosynthesis?", "Explain quantum mechanics basics", "How does DNA replication work?"],
+  financial_literacy: ["How do I start budgeting?", "Explain compound interest", "What is an index fund?"],
+  social_skills: ["How can I improve public speaking?", "Tips for active listening", "How to give constructive feedback"],
+  critical_thinking: ["What are logical fallacies?", "How to evaluate news sources?", "Explain the Socratic method"],
+  sustainability: ["What is the carbon footprint?", "How to live more sustainably?", "Explain renewable energy sources"],
+};
 
 const Learn = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -78,53 +91,25 @@ const Learn = () => {
       const conversationHistory = messages.slice(-6).map((m) => ({ role: m.role, content: m.content }));
 
       const { data, error } = await supabase.functions.invoke("ai-chat", {
-        body: {
-          query: q,
-          experienceLevel: profile?.experience_level || "beginner",
-          preferredDomain: activeDomain,
-          conversationHistory,
-        },
+        body: { query: q, experienceLevel: profile?.experience_level || "beginner", preferredDomain: activeDomain, conversationHistory },
       });
 
       if (error) throw error;
 
       if (interaction) {
-        await supabase
-          .from("user_interactions")
-          .update({ generated_response: data.content })
-          .eq("id", interaction.id);
+        await supabase.from("user_interactions").update({ generated_response: data.content }).eq("id", interaction.id);
       }
 
-      const assistantMsg: Message = {
-        role: "assistant",
-        content: data.content,
-        interactionId: interaction?.id,
-        quiz: data.quiz,
-      };
+      const assistantMsg: Message = { role: "assistant", content: data.content, interactionId: interaction?.id, quiz: data.quiz };
       setMessages((prev) => [...prev, assistantMsg]);
-    } catch (err: any) {
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "Sorry, something went wrong. Please try again." },
-      ]);
+    } catch {
+      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, something went wrong. Please try again." }]);
     } finally {
       setLoading(false);
     }
   };
 
   const domainLabel = getDomainLabel(activeDomain);
-
-  const suggestedByDomain: Record<string, string[]> = {
-    career_guidance: ["How do I write a standout resume?", "What are the top careers in 2026?", "Help me prepare for a job interview"],
-    civic_awareness: ["What are my fundamental rights?", "How does the election process work?", "Explain the structure of local government"],
-    mental_wellness: ["How can I manage stress better?", "Teach me a mindfulness technique", "What are signs of burnout?"],
-    technology: ["Explain how machine learning works", "What is cloud computing?", "How does blockchain work?"],
-    science: ["What is photosynthesis?", "Explain quantum mechanics basics", "How does DNA replication work?"],
-    financial_literacy: ["How do I start budgeting?", "Explain compound interest", "What is an index fund?"],
-    social_skills: ["How can I improve public speaking?", "Tips for active listening", "How to give constructive feedback"],
-    critical_thinking: ["What are logical fallacies?", "How to evaluate news sources?", "Explain the Socratic method"],
-    sustainability: ["What is the carbon footprint?", "How to live more sustainably?", "Explain renewable energy sources"],
-  };
   const suggestions = suggestedByDomain[activeDomain] || ["Explain something interesting", "Teach me something new", "Help me understand a concept"];
 
   return (
@@ -133,16 +118,13 @@ const Learn = () => {
       <main className="flex-1 container mx-auto px-4 py-4 max-w-3xl flex flex-col">
         {/* Domain picker toggle */}
         <div className="mb-3">
-          <button
-            onClick={() => setShowDomainPicker(!showDomainPicker)}
-            className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
+          <button onClick={() => setShowDomainPicker(!showDomainPicker)} className="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
             <span>Learning: <span className="text-primary">{domainLabel}</span></span>
             {showDomainPicker ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           <AnimatePresence>
             {showDomainPicker && (
-              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden mt-2">
+              <motion.div variants={collapse} initial="hidden" animate="visible" exit="exit" className="overflow-hidden mt-2">
                 <DomainSelector selected={activeDomain} onSelect={(d) => { setActiveDomain(d); setShowDomainPicker(false); }} />
               </motion.div>
             )}
@@ -151,16 +133,13 @@ const Learn = () => {
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto space-y-6 pb-4">
           {messages.length === 0 ? (
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col items-center justify-center h-full py-12">
+            <motion.div variants={fadeUp} initial="hidden" animate="visible" className="flex flex-col items-center justify-center h-full py-12">
               <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 animate-float">
                 <Sparkles className="w-8 h-8 text-primary-foreground" />
               </div>
-              <h2 className="text-2xl font-display font-bold text-foreground mb-2 text-center">
-                Learn about {domainLabel}
-              </h2>
+              <h2 className="text-2xl font-display font-bold text-foreground mb-2 text-center">Learn about {domainLabel}</h2>
               <p className="text-muted-foreground text-center mb-8 max-w-md">
-                Ask any question — content is tailored to your
-                <span className="font-medium text-foreground"> {profile?.experience_level || "beginner"}</span> level
+                Ask any question — content is tailored to your <span className="font-medium text-foreground">{profile?.experience_level || "beginner"}</span> level
               </p>
               <div className="flex flex-wrap gap-2 justify-center max-w-lg">
                 {suggestions.map((topic) => (
@@ -172,7 +151,7 @@ const Learn = () => {
             </motion.div>
           ) : (
             messages.map((msg, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+              <motion.div key={i} variants={messageIn} initial="hidden" animate="visible">
                 {msg.role === "user" ? (
                   <div className="flex justify-end">
                     <div className="max-w-[80%] bg-primary text-primary-foreground rounded-2xl rounded-br-md px-4 py-3 text-sm">{msg.content}</div>
@@ -200,7 +179,7 @@ const Learn = () => {
             ))
           )}
           {loading && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-2 text-muted-foreground text-sm">
+            <motion.div variants={fadeIn} initial="hidden" animate="visible" className="flex items-center gap-2 text-muted-foreground text-sm">
               <Loader2 className="w-4 h-4 animate-spin text-primary" />
               Generating personalized response...
             </motion.div>

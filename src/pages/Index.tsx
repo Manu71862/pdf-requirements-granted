@@ -4,7 +4,10 @@ import { useAuth } from "@/lib/auth";
 import { useProfile } from "@/hooks/useProfile";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BookOpen, Sparkles, Target, Brain, ArrowRight } from "lucide-react";
+import { Sparkles, Target, Brain, ArrowRight } from "lucide-react";
+import { Logo } from "@/components/Logo";
+import { branding } from "@/lib/branding";
+import { fadeUp, staggerContainer, staggerItem, transitions } from "@/lib/animations";
 
 const features = [
   { icon: Brain, title: "AI-Powered Learning", desc: "Get personalized explanations tailored to your level" },
@@ -40,21 +43,17 @@ const Index = () => {
 
         <div className="container mx-auto px-4 pt-20 pb-16 relative z-10">
           <nav className="flex items-center justify-between mb-16">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="font-display font-bold text-xl text-foreground">Learnflow</span>
-            </div>
+            <Logo size="md" nameClassName="font-display font-bold text-xl text-foreground" />
             <Button onClick={() => navigate("/auth")} className="bg-gradient-primary">
               Get Started <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </nav>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={transitions.hero}
             className="text-center max-w-2xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
@@ -62,13 +61,12 @@ const Index = () => {
               Powered by Generative AI
             </div>
             <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 leading-tight">
-              Learn <span className="text-gradient-primary">smarter</span>,{" "}
+              {branding.tagline.split(",")[0]},{" "}
               <br className="hidden sm:inline" />
-              not harder
+              <span className="text-gradient-primary">{branding.tagline.split(",")[1]?.trim()}</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-10 max-w-lg mx-auto">
-              An adaptive learning platform that personalizes content to your level,
-              tracks your progress, and helps you master any topic.
+              {branding.description}
             </p>
             <div className="flex items-center justify-center gap-4">
               <Button size="lg" onClick={() => navigate("/auth")} className="bg-gradient-primary text-lg px-8">
@@ -81,13 +79,16 @@ const Index = () => {
 
       {/* Features */}
       <div className="container mx-auto px-4 py-20">
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {features.map((f, i) => (
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+        >
+          {features.map((f) => (
             <motion.div
               key={f.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
+              variants={staggerItem}
               className="p-6 rounded-2xl bg-card border border-border hover:shadow-lg hover:border-primary/20 transition-all group"
             >
               <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center mb-4 group-hover:animate-pulse-glow">
@@ -97,7 +98,7 @@ const Index = () => {
               <p className="text-sm text-muted-foreground">{f.desc}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
