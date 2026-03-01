@@ -193,6 +193,7 @@ export type Database = {
       user_interactions: {
         Row: {
           created_at: string | null
+          domain: string | null
           generated_response: string | null
           id: string
           input_query: string
@@ -200,6 +201,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          domain?: string | null
           generated_response?: string | null
           id?: string
           input_query: string
@@ -207,6 +209,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          domain?: string | null
           generated_response?: string | null
           id?: string
           input_query?: string
