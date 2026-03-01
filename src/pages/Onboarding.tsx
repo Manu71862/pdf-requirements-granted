@@ -5,23 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Code, Microscope, Palette, Globe, Briefcase, GraduationCap, Rocket, Award } from "lucide-react";
+import { domains, levels } from "@/lib/domains";
 import { useToast } from "@/hooks/use-toast";
-
-const domains = [
-  { id: "technology", label: "Technology", icon: Code },
-  { id: "science", label: "Science", icon: Microscope },
-  { id: "arts", label: "Arts & Design", icon: Palette },
-  { id: "languages", label: "Languages", icon: Globe },
-  { id: "business", label: "Business", icon: Briefcase },
-  { id: "general", label: "General", icon: BookOpen },
-];
-
-const levels = [
-  { id: "beginner", label: "Beginner", icon: GraduationCap, description: "Just getting started" },
-  { id: "intermediate", label: "Intermediate", icon: Rocket, description: "Some experience" },
-  { id: "advanced", label: "Advanced", icon: Award, description: "Deep expertise" },
-];
 
 const Onboarding = () => {
   const [step, setStep] = useState(0);
@@ -55,7 +40,7 @@ const Onboarding = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-lg relative z-10"
+        className="w-full max-w-2xl relative z-10"
       >
         {/* Progress bar */}
         <div className="flex gap-2 mb-8">
@@ -80,12 +65,12 @@ const Onboarding = () => {
               exit={{ opacity: 0, x: -20 }}
             >
               <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-                What are you interested in?
+                What would you like to learn?
               </h2>
               <p className="text-muted-foreground mb-6">
-                Choose your preferred learning domain
+                Choose a domain — from career planning to mental wellness
               </p>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {domains.map((d) => (
                   <Card
                     key={d.id}
@@ -96,9 +81,10 @@ const Onboarding = () => {
                     }`}
                     onClick={() => setDomain(d.id)}
                   >
-                    <CardContent className="flex items-center gap-3 p-4">
-                      <d.icon className={`w-5 h-5 ${domain === d.id ? "text-primary" : "text-muted-foreground"}`} />
+                    <CardContent className="flex flex-col items-center gap-2 p-4 text-center">
+                      <d.icon className={`w-6 h-6 ${domain === d.id ? "text-primary" : "text-muted-foreground"}`} />
                       <span className="font-medium text-sm">{d.label}</span>
+                      <span className="text-xs text-muted-foreground leading-tight">{d.description}</span>
                     </CardContent>
                   </Card>
                 ))}

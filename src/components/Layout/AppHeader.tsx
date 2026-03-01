@@ -1,7 +1,7 @@
 import { useAuth } from "@/lib/auth";
 import { useProfile } from "@/hooks/useProfile";
 import { Button } from "@/components/ui/button";
-import { BookOpen, LogOut, User } from "lucide-react";
+import { BookOpen, LogOut, User, BarChart3 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 export function AppHeader() {
@@ -30,6 +30,9 @@ export function AppHeader() {
           </Link>
           <Link to="/learn">
             <Button variant="ghost" size="sm">Learn</Button>
+          </Link>
+          <Link to="/analytics">
+            <Button variant="ghost" size="sm">Analytics</Button>
           </Link>
           <div className="flex items-center gap-2 pl-4 border-l border-border">
             <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
