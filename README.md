@@ -44,8 +44,31 @@
 | **Icons** | Lucide React |
 
 ## 🛠️ Installation & Setup
-### you can visit our site at https://learnflow71826.lovable.app Since github doesnot suppport out build with vite and react 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/Manu71862/Learnflow.git
 cd Learnflow
+npm install
+npm run dev
+```
+
+## 🌐 Publishing / Static Hosting Fix
+If the app is published to a static host (for example GitHub Pages), two issues can break it:
+- Vite assets were being generated with absolute URLs (`/assets/...`), which fail when hosted under a repo subpath.
+- BrowserRouter depends on server-side route rewrites, which static hosts usually don't provide.
+
+This repository now uses:
+- `base: "./"` in Vite so built assets are loaded via relative paths.
+- `HashRouter` so client-side routes work without server rewrites.
+
+## 🚀 GitHub Pages publishing
+1. Push this branch to GitHub.
+2. In **Settings → Pages**, set **Source** to **GitHub Actions**.
+3. Ensure your default branch is `main` (the workflow deploys on pushes to `main`).
+4. The site will publish automatically via `.github/workflows/deploy-pages.yml`.
+
+This repo is now configured to publish correctly on static hosting:
+- Uses `HashRouter` so deep links work without server rewrites.
+- Uses relative Vite asset paths for subpath hosting.
+- Includes Supabase client fallbacks so production builds still run even if `VITE_*` env vars are not injected by the host.
+
